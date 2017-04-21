@@ -3,7 +3,7 @@
             [clojure.string :as str]
             [ring.util.response :as ring]
             [taoensso.carmine :as car :refer (wcar)]
-            ;; [application-management.db.redis :as redis]
+            [application-management.db.redis :as redis]
             ))
 
 
@@ -13,17 +13,14 @@
 
 (defmacro wcar* [& body] `(car/wcar server-conn ~@body))
 
+(def response "<h1>Record Saved</h1>" )
 
 (defn create
   [application]
-  (prn (str "output"  application)
-  "<h2>hi we got result</h2>"))
+  (redis/save (get application "emailId") application) 
+  response)
 
 (defn getApplications
-  []
-  (let [ x (wcar* (car/set "192:168:1:115" "application 1")
-                (car/set "192:168:1:122" "application 2")
-                (car/set "192:168:1:123" "application 3")
-                (car/set "192:168:1:124" "application 4"))]
-    (prn x))
-  "<h2>hi we got result</h2>")
+  [body]
+  (prn "reached in controller")
+  (redis/getAll (get body "emailId")))
