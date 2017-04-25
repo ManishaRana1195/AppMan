@@ -2,25 +2,50 @@
 (:require [compojure.core :refer [defroutes GET POST]]
             [clojure.string :as str]
             [ring.util.response :as ring]
-            [taoensso.carmine :as car :refer (wcar)]
             [application-management.db.redis :as redis]
             ))
 
+(defn invalid?
+  [value]
+  (or (empty? value) (nil? value)))
 
-(def server-conn {:pool {} :spec {:host "localhost"
-                               :port     6379
-                               :timeout-ms  4000}})
+;; some returns nil if the all elements are valid
+(defn invalid-json [application]
+ (some invalid? (map second application)))
 
-(defmacro wcar* [& body] `(car/wcar server-conn ~@body))
+(defn get-ip []
+  "")
 
-(def response "<h1>Record Saved</h1>" )
+(defn get-email-id [application]
+  (get application "emailId"))
+
+(defn get-struct
+  [application]
+  (flatten (seq application)))
 
 (defn create
-  [application]
-  (redis/save (get application "emailId") application) 
-  response)
+  [application]  
+  (when (invalid-json application)
+    {:error "Error" :message ""})
+  (let [ip        get-ip 
+        email-id  (get-email-id application)]
+   (redis/save email-id)
+   (redis/saveSet (get application "emailId") (get-struct application)))
+  {:success true})
+
 
 (defn getApplications
-  [body]
-  (prn "reached in controller")
-  (redis/getAll (get body "emailId")))
+  []
+  (redis/getAll))
+
+(defn accept
+  [])
+
+(defn reject
+  [])
+
+(defn filterList
+  [])
+
+(defn login
+  [])

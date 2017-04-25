@@ -11,8 +11,13 @@
 
 (defroutes routes
   (GET "/" [] "<H3>hello world</H3>")
-  (POST "/all" {body :body} (resp/response (app/getApplications body)) )
-  (POST "/apply" {body :body}  (resp/response  (app/create body))))
+  (GET "/all" [] (resp/response (app/getApplications)) )
+  (POST "/apply" {body :body}  (resp/response  (app/create body)))
+  (POST "/accept" {body :body} (resp/response (app/accept body)))
+  (POST "/reject" {body :body} (resp/response (app/reject body)))
+  (POST "/filter" {params :params} (resp/response (app/filterList params)))
+  (POST "/admin/login" {params :params} (resp/response (app/login params))))
+  
 
 
 (defn -main []

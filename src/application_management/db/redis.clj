@@ -9,14 +9,24 @@
 
 (defmacro wcar* [& body] `(car/wcar server-conn ~@body))
 
-
 (defn save
-  [email-id json]
-  (let [ x (wcar* (car/hmset "geekskool-data" email-id (str json)))]))
+  [email-id]
+  (wcar* (car/lpush "applicants" email-id)))
 
+(defn saveSet
+  [email-id content]
+  (wcar* (apply car/hmset email-id content)))
+
+(defn convert-format
+  [detailList]
+ (apply hash-map detailList)
+)
 
 (defn getAll
-  [emailId]
-  (let [ x (wcar* (car/hget "geekskool-data" emailId))]
-    (prn (str "output" x))
-    x))
+  []  
+  (loop [ recent-emails (wcar* (car/lrange "applicants" 0 50))  
+         applications []]
+    (if (empty? recent-emails)
+      applications
+      (recur (pop recent-emails) (merge applications (convert-format (wcar* (car/hgetall (peek recent-emails))))))))
+  )
