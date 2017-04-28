@@ -25,14 +25,14 @@
   (flatten (seq application)))
 
 (defn create
-  [application]  
+  [application] 
   (if (invalid-json application)
     {:error "Error" :message ""}
   
   (do (let [ip        get-ip 
             email-id  (get-email-id application)]
    (redis/save email-id)
-   (redis/saveSet (get application "emailId") (get-struct application)))
+   (redis/saveSet (get application :emailId ) (get-struct application)))
   {:success true})))
 
 

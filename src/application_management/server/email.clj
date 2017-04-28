@@ -11,6 +11,3 @@
   :subject "Accept mail"
   :html "<h1>Hello world</h1>"
   :text "Hello world"}))
-
-
-
