@@ -1,4 +1,4 @@
-(ns application-management.core)
+(ns application-management.server.core)
 
 (defn foo
   "I don't do a whole lot."

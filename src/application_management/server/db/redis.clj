@@ -1,4 +1,4 @@
-(ns application-management.db.redis
+(ns application-management.server.db.redis
 (:require   [clojure.string :as str]
             [taoensso.carmine :as car :refer (wcar)]))
 

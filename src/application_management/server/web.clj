@@ -1,11 +1,11 @@
-(ns application-management.web
+(ns application-management.server.web
   (:require [compojure.core :refer [defroutes GET POST]]
             [compojure.route :as route]
             [ring.adapter.jetty :as ring]
             [ring.middleware.params :as par]
             [ring.middleware.json :as json :only [wrap-json-body wrap-json-response]]
             [ring.util.response :as resp]
-            [application-management.controllers.applications :as app])
+            [application-management.server.controllers.applications :as app])
   (:gen-class)
 )
 

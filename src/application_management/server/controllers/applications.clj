@@ -1,8 +1,9 @@
-(ns application-management.controllers.applications
+(ns application-management.server.controllers.applications
 (:require [compojure.core :refer [defroutes GET POST]]
             [clojure.string :as str]
             [ring.util.response :as ring]
-            [application-management.db.redis :as redis]
+            [application-management.server.db.redis :as redis]
+            [application-management.server.email :as email]
             ))
 
 (defn invalid?
@@ -39,13 +40,16 @@
   (redis/getAll))
 
 (defn accept
-  [])
+  [body]
+  (email/send-data body))
 
 (defn reject
-  [])
+  [body]
+  (email/send-data body))
 
 (defn filterList
-  [])
+  [body]
+  (redis/getAll))
 
 (defn login
   [])
