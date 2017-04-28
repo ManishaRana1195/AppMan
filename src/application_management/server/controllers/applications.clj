@@ -10,7 +10,7 @@
   [value]
   (or (empty? value) (nil? value)))
 
-;; some returns nil if the all elements are valid
+;;some returns nil if the all elements are valid
 (defn invalid-json [application]
  (some invalid? (map second application)))
 
@@ -26,13 +26,14 @@
 
 (defn create
   [application]  
-  (when (invalid-json application)
-    {:error "Error" :message ""})
-  (let [ip        get-ip 
-        email-id  (get-email-id application)]
+  (if (invalid-json application)
+    {:error "Error" :message ""}
+  
+  (do (let [ip        get-ip 
+            email-id  (get-email-id application)]
    (redis/save email-id)
    (redis/saveSet (get application "emailId") (get-struct application)))
-  {:success true})
+  {:success true})))
 
 
 (defn getApplications
