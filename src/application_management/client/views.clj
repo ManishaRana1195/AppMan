@@ -22,9 +22,35 @@
    			[:li [:a { :href "/passed-batch"} "Survivors"]]]
    	]])
 
+(defn div-chip
+  [language]
+  [:div.chip language])
+
+(defn get-icons
+  [link]
+  (cond
+    (str/includes? link "github")  "img/glogo.png"
+    (str/includes? link "twitter")  "img/tlogo.png"
+    :else "img/llogo.png"))
+
+(defn div-image
+  [link]
+  [:a.link-img { :href link :target "_blank"} [:img {:src (get-icons link)}]]) 
+
+
+(defn get-chips
+  [languages]
+  (let [lang-list (str/split languages #"\s+")]
+    (map div-chip lang-list)))
+
+(defn display-links
+  [links]
+  (let [link (str/split links #"\s+")]
+    (map div-image link)))
+
 (defn display-record
 	[details]
-    [:div.row [:div.col.s12.card.blue-grey.darken-1 
+    [:div.row [:div.col.s12.card.without-margin.blue-grey.darken-1 
         [:div.col.s10
         [:div.card-content.white-text
           [:span.card-title (get details "name")]
@@ -35,8 +61,11 @@
         [:div.col.s2
             [:div.card-action
           [:a.action-button {:href "#"} "Accept"]
-          [:a.action-button {:href "#"} "Reject"]
-        ]]]]
+          [:a.action-button {:href "#"} "Reject"]]
+          [:div.display-links (display-links (get details "links"))]]
+
+        [:div.col.s12
+          [:div.chips (get-chips (get details "languages"))]]]]
 )
 
 

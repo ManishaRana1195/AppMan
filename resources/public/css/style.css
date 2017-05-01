@@ -68,18 +68,35 @@ button {
 }
 
 .action-button {
-	display: flex;
+	  display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20px
+    margin: 10px
+}
+
+.display-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
 }
 
 .applicant-email {
-	font-size: 18px
-	padding-left: 15px;
+	font-size: 18px;
+  padding-bottom: 45px;
 }
 
 .applicant-phone {
-	font-size: 15px
+	font-size: 15px;
 	padding-left: 15px;
+  padding-bottom: 45px;
 }
+
+.chips, .link-img {
+  margin: 15px;
+}
+
+.without-margin {
+  margin: 0px;
+}
+
