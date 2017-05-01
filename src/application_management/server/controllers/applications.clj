@@ -18,7 +18,7 @@
   "")
 
 (defn get-email-id [application]
-  (get application "emailId"))
+  (get application :emailId))
 
 (defn get-struct
   [application]

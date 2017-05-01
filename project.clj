@@ -13,15 +13,18 @@
                 [ring/ring-json "0.4.0"]
                 [io.forward/sendgrid-clj "1.0"]
                 [org.clojure/clojurescript "1.9.229"]
+                [cljs-http "0.1.42"]
                 [org.clojure/core.async  "0.3.442"
                   :exclusions [org.clojure/tools.reader]]
-                ]
+                [hiccup "1.0.5"]                ]
   
   :plugins [[lein-figwheel "0.5.10"]
             [lein-cljsbuild "1.1.5" :exclusions [[org.clojure/clojure]]]]
 
+  :clj{
   :source-paths ["src/application_management/server"]
-
+  }
+  
   :cljsbuild {:builds
               [{:id "dev"
                 :source-paths ["src/application_management"]

@@ -24,7 +24,7 @@
 
 (defn getAll
   []  
-  (loop [ recent-emails (wcar* (car/lrange "applicants" 0 50))  
+  (loop [recent-emails (wcar* (car/lrange "applicants" 0 50))  
          applications []]
     (if (empty? recent-emails)
       applications

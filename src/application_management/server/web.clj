@@ -4,16 +4,17 @@
             [ring.adapter.jetty :as ring]
             [ring.middleware.params :as par]
             [ring.middleware.json :as json :only [wrap-json-body wrap-json-response wrap-json-params]]
-            [ring.middleware.keyword-params :as keyparams]
             [ring.util.response :as resp]
             [compojure.handler :as handler]
-            [application-management.server.controllers.applications :as app])
+            [application-management.server.controllers.applications :as app]
+            [application-management.client.views :as views])
   (:gen-class)
 )
 
+
 (defroutes routes
-  (GET "/" [] "<H3>hello world</H3>")
- ;; (route/resources "/")
+  (route/resources "/")
+  (GET "/" [] views/home-page)
   (GET "/all" [] (resp/response (app/getApplications)) )
   (POST "/apply" request (resp/response  (app/create (get-in request [:params]))))
   (POST "/accept" {body :body} (resp/response (app/accept body)))
@@ -24,7 +25,6 @@
 (def app
   (-> (handler/site routes)
       (json/wrap-json-body)
-      (keyparams/wrap-keyword-params)
       (json/wrap-json-params)
       (json/wrap-json-response)))
 

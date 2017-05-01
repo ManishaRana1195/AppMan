@@ -1,13 +1,20 @@
 (ns test-cljs.core
-  (:require ))
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [cljs-http.client :as http]
+            [cljs.core.async :refer [<!]]))
 
 (enable-console-print!)
 
-(println "This text is printed from src/test-cljs/core.cljs. Go ahead and edit it and see reloading in action.")
+;; request
+(go (let [response (<! (http/get "/all"))]
+    )) 
+
 
 ;; define your app data so that it doesn't get over-written on reload
-
 (defonce app-state (atom {:text "Hello world!"}))
+
+
+
 
 (defn on-js-reload []
   ;; optionally touch your app-state to force rerendering depending on

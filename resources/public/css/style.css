@@ -1,2 +1,85 @@
-/* some style */
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans";
+  font-weight: 300;
+}
+p {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+h2 {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 60px;
+}
+h4 {
+  margin: 0;
+  padding: 0;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+}
+h5 {
+  margin: 0;
+  padding: 5px 0px 5px 0px;
+  font-weight: 400;
+  font-size: 18px;
+}
 
+nav .brand-logo {
+	padding-left: 1%;
+}
+
+.container {
+  margin: 0;
+  padding: 0;
+  width: 640px;
+  box-sizing: border-box;
+  margin: auto;
+}
+@media (max-width: 640px) {
+  .container {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+.container h4 {
+  padding: 20px;
+  margin: 0;
+  line-height: 60px;
+  background-color: #afeeee;
+}
+
+button {
+  margin: 30px;
+  padding: 10px;
+  font-weight: 200;
+  font-size: 22px;
+  color: #ffffff;
+  background-color: darkturquoise;
+  border: 0px;
+  text-indent: center;
+}
+
+.action-button {
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px
+}
+
+.applicant-email {
+	font-size: 18px
+	padding-left: 15px;
+}
+
+.applicant-phone {
+	font-size: 15px
+	padding-left: 15px;
+}
