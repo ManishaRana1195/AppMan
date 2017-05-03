@@ -42,11 +42,11 @@
 
 (defn accept
   [body]
-  (email/send-data body))
+  (email/accept body))
 
 (defn reject
   [body]
-  (email/send-data body))
+  (email/reject body))
 
 (defn filterList
   [body]

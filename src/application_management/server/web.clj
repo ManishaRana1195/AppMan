@@ -17,9 +17,9 @@
   (GET "/" [] views/home-page)
   (GET "/all" [] (resp/response (app/getApplications)) )
   (POST "/apply" request (resp/response  (app/create (get-in request [:params]))))
-  (POST "/accept" {body :body} (resp/response (app/accept body)))
-  (POST "/reject" {body :body} (resp/response (app/reject body)))
-  (POST "/filter" {params :params} (resp/response (app/filterList params)))
+  (POST "/accept" request (resp/response (app/accept (get-in request [:params]))))
+  (POST "/reject" request (resp/response (app/reject (get-in request [:params]))))
+  (POST "/filter" request (resp/response (app/filterList (get-in request [:params]))))
   (POST "/admin/login" {params :params} (resp/response (app/login params))))
   
 (def app
