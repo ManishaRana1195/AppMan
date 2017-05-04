@@ -35,6 +35,13 @@
    (redis/saveSet (get application :emailId ) (get-struct application)))
   {:success true})))
 
+;;saving the ddetails of the user into redis
+ (defn save-details
+  [details]
+  (if (invalid-json details) 
+      {:error "Error" :message ""}
+  (do (redis/saveSet (get details :emailId) (get-struct details))
+      {:success true})))
 
 (defn getApplications
   []

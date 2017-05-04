@@ -15,12 +15,13 @@
 (defroutes routes
   (route/resources "/")
   (GET "/" [] views/home-page)
-  (GET "/all" [] (resp/response (app/getApplications)) )
+  (GET "/all" [] (resp/response (app/getApplications)))
   (POST "/apply" request (resp/response  (app/create (get-in request [:params]))))
   (POST "/accept" request (resp/response (app/accept (get-in request [:params]))))
   (POST "/reject" request (resp/response (app/reject (get-in request [:params]))))
   (POST "/filter" request (resp/response (app/filterList (get-in request [:params]))))
-  (POST "/admin/login" {params :params} (resp/response (app/login params))))
+  (POST "/admin/login" {params :params} (resp/response (app/login params)))
+  (POST "/user/details" request (resp/response (app/save-details (get-in request [:params])))))
   
 (def app
   (-> (handler/site routes)
