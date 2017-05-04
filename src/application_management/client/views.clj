@@ -7,8 +7,8 @@
   [title]
   [:head
    [:title title]
-   (hic/include-css "css/style.css")
    (hic/include-css "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css")
+   (hic/include-css "css/style.css")
    (hic/include-js "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
    (hic/include-js "js/compiled/app_man_cljs.js")
    (hic/include-js "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js")])
@@ -24,7 +24,7 @@
 
 (defn div-chip
   [language]
-  [:div.chip language])
+  [:div.chip.language-tag language])
 
 (defn get-icons
   [link]
@@ -50,38 +50,38 @@
 
 (defn display-record
 	[details]
-    [:div.row [:div.col.s12.card.without-margin.blue-grey.darken-1 
-        [:div.col.s10
-        [:div.card-content.white-text
-          [:span.card-title (get details "name")]
-          [:span.applicant-email (get details "emailId")]
-          [:span.applicant-phone (get details "phoneNumber")]
-          [:p (get details "eligible")]]]
+    [:div.row.without-margin [:div.col.s12.card.blue-grey.darken-1 
+        [:div.col.s9.card-content.white-text
+          [:div.extra-margin
+            [:span.inline-title (get details "name")]
+            [:span.applicant-email (get details "emailId")]
+            [:span.applicant-phone (get details "phoneNumber")]
+            [:span.display-links (display-links (get details "links"))]
+          ]
+            [:p.eligible (get details "eligible")]]
 
-        [:div.col.s2
-            [:div.card-action
-          [:a.action-button {:href "#"} "Accept"]
-          [:a.action-button {:href "#"} "Reject"]]
-          [:div.display-links (display-links (get details "links"))]]
+        [:div.col.s3
+              [:div.chips.languages (get-chips (get details "languages"))]]
 
         [:div.col.s12
-          [:div.chips (get-chips (get details "languages"))]]]]
+          [:div.card-action
+          [:a.action-button {:href "#"} "Accept"]
+          [:a.action-button {:href "#"} "Reject"]]]]]
 )
-
 
 (defn get-footer
 	[]
     [:footer.page-footer
-    [:div.container [:div.row 
-      	[:div.col.l6.s12
-            [:h5.white-text "Footer Content"]
-            [:p.grey-text.text-lighten-4 "You can use rows and columns here to organize your footer content"]]
+    ; [:div.container [:div.row 
+    ;   	[:div.col.l6.s12
+    ;         [:h5.white-text "Footer Content"]
+    ;         [:p.grey-text.text-lighten-4 "You can use rows and columns here to organize your footer content"]]
 
-        [:div.col.l4.offset-l2.s12
-            [:h5.white-text "Links"]
-            [:ul
-              [:li [:a.grey-text.text-lighten-3 { :href "/"} "Link 1"]]
-			  [:li [:a.grey-text.text-lighten-3 { :href "/"} "Link 2"]]]]]]
+    ;     [:div.col.l4.offset-l2.s12
+    ;         [:h5.white-text "Links"]
+    ;         [:ul
+    ;           [:li [:a.grey-text.text-lighten-3 { :href "/"} "Link 1"]]
+			 ;  [:li [:a.grey-text.text-lighten-3 { :href "/"} "Link 2"]]]]]]
 
     [:div.footer-copyright [:div.container
         "© 2014 Copyright Text"
@@ -92,10 +92,10 @@
   [req]
   (hic/html5
     [:header 
-   		(gen-page-head "YourAppMan")
+   		(gen-page-head "AppMan")
    		header-links ]
     [:main 
-   		[:div.container (let [resp (app/getApplications)]
+   		[:div.container.content-box (let [resp (app/getApplications)]
  							(map display-record resp))]]
     (get-footer)
 ))
