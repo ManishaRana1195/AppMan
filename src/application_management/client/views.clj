@@ -1,7 +1,9 @@
 (ns application-management.client.views
   (:require [clojure.string :as str]
   			[application-management.server.controllers.applications :as app]
-            [hiccup.page :as hic]))
+            [hiccup.page :as hic]
+            [compojure.core :refer :all]
+            [hiccup.form :as form]))
 
 (defn gen-page-head
   [title]
@@ -99,3 +101,22 @@
  							(map display-record resp))]]
     (get-footer)
 ))
+
+(defn user-details
+  [req]
+  (hic/html5
+    [:header 
+      (gen-page-head "user-details")
+       header-links]
+       [:main 
+        (form/form-to {:enctype "application/json"}[:post "/user/details"]
+         [:div
+           [:input.form-control
+             {:type "text" :placeholder "Your name" :name "name"}]
+               [:input.form-control
+             {:type "text" :placeholder "Your email-id" :name "emailId"}]
+               [:input.form-control
+             {:type "text" :placeholder "Your description" :name "description"}]]
+             (form/submit-button {:class "btn"} "Save"))]))
+        
+        
