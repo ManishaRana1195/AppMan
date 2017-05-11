@@ -109,14 +109,19 @@
       (gen-page-head "user-details")
        header-links]
        [:main 
-        (form/form-to {:enctype "application/json"}[:post "/user/details"]
+        (form/form-to {:enctype "multipart/form-data"}[:post "/user/details"]
          [:div
            [:input.form-control
              {:type "text" :placeholder "Your name" :name "name"}]
                [:input.form-control
              {:type "text" :placeholder "Your email-id" :name "emailId"}]
                [:input.form-control
-             {:type "text" :placeholder "Your description" :name "description"}]]
-             (form/submit-button {:class "btn"} "Save"))]))
+             {:type "text" :placeholder "Your description" :name "description"}]
+             [:input.form-control
+             {:type "file" :accept "pdf" :required "true" :name "idProof"}]
+             [:input.datepicker
+             {:type "date"}]]
+             (form/submit-button {:class "btn"} "Save"))])
+             )
         
         

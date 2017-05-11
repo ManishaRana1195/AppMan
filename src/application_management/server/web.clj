@@ -7,10 +7,23 @@
             [ring.util.response :as resp]
             [compojure.handler :as handler]
             [application-management.server.controllers.applications :as app]
-            [application-management.client.views :as views])
+            [application-management.client.views :as views]
+            [clojure.java.io :as io])
   (:gen-class)
 )
 
+(defn save-idProof [source-path dest-path]
+  (io/copy (io/file source-path) (io/file dest-path)))
+
+(defn get-dest-path [file-name]
+  (format "data/idProof/%s.pdf" file-name))
+
+(defn get-src-path [request]  
+  (str (get-in request [:params :idProof :tempfile])))
+
+(defn update-params [request] 
+      (let [new-request (assoc-in request [:params :idProof] (get-dest-path (get-in request [:params :emailId])))]
+      (get-in new-request [:params])))
 
 (defroutes routes
   (route/resources "/")
@@ -22,8 +35,14 @@
   (POST "/reject" request (resp/response (app/reject (get-in request [:params]))))
   (POST "/filter" request (resp/response (app/filterList (get-in request [:params]))))
   (POST "/admin/login" {params :params} (resp/response (app/login params)))
-  (POST "/user/details" request (resp/response (app/save-details (get-in request  [:params]))))  )
+  (POST "/user/details" request
+                              (save-idProof (get-src-path request) (get-dest-path (get-in request [:params :emailId])))
+                              (resp/response (app/save-details (update-params request)))))
   
+
+
+
+
 (def app
   (-> (handler/site routes)
       (json/wrap-json-body)
@@ -32,3 +51,4 @@
 
 (defn -main []
   (ring/run-jetty app {:port 8080 :join? false}))
+
