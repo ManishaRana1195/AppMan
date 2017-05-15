@@ -27,9 +27,11 @@
 
 (defroutes routes
   (route/resources "/")
-  (GET "/" [] views/home-page)
+  (GET "/" [] views/applicants-page)
   (GET "/all" [] (resp/response (app/getApplications)))
   (GET "/form" [] views/user-details)
+  (GET "/passed" [] views/passed-batch-page)
+  (GET "/current" [] views/current-batch-page)
   (POST "/apply" request (resp/response  (app/create (get-in request [:params]))))
   (POST "/accept" request (resp/response (app/accept (get-in request [:params]))))
   (POST "/reject" request (resp/response (app/reject (get-in request [:params]))))

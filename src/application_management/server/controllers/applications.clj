@@ -46,11 +46,25 @@
 
 (defn getApplications
   []
-  (redis/getAll))
+  (redis/getAll "applicants"))
+
+(defn getPassed
+  []
+  (redis/getAll "passed"))
+
+(defn getCurrent
+  []
+  (redis/getAll "current"))
+
 
 (defn accept
   [body]
+  (redis/save "current" (get body :emailId))
   (email/accept body))
+
+(defn passed
+  [body]
+  (redis/save "passed" (get body :emailId)))
 
 (defn reject
   [body]

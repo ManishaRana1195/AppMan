@@ -23,8 +23,8 @@
 )
 
 (defn getAll
-  []  
-  (loop [recent-emails (wcar* (car/lrange "applicants" 0 50))  
+  [type]  
+  (loop [recent-emails (wcar* (car/lrange type 0 50))  
          applications []]
     (if (empty? recent-emails)
       applications

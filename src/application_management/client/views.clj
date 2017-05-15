@@ -19,8 +19,8 @@
 		[:a.brand-logo { :href "/"} "AppMan"]
   		[:ul#nav-mobile.right.hide-on-med-and-down 
    			[:li [:a { :href "/"} "Applicants"] ]
-   			[:li [:a { :href "/current-batch"} "Currently Surviving"]]
-   			[:li [:a { :href "/passed-batch"} "Survivors"]]]
+   			[:li [:a { :href "/current"} "Gladiators"]]
+   			[:li [:a { :href "/passed"} "Spartans"]]]
    	]])
 
 (defn div-chip
@@ -103,17 +103,29 @@
         [:a.grey-text.text-lighten-4.right { :href "/"} "More Links"]]]]
 )
 
-(defn home-page
-  [req]
+(defn show-no-result-view
+  [result]
+  [:div.row.without-margin 
+    [:div.col.s12.card.blue-grey.darken-1.card-content.white-text "Sorry, No results found"]])
+
+(defn show-result 
+  [result]
+  (map display-record result))
+
+(defn page
+  [result]
   (hic/html5
-    [:header 
-   		(gen-page-head "AppMan")
-   		header-links ]
-    [:main 
-   		[:div.container.content-box (let [resp (app/getApplications)]
- 							(map display-record resp))]]
-    (get-footer)
-))
+    [:header (gen-page-head "AppMan") header-links]
+    [:main [:div.container.content-box  
+        (if (empty? result)
+        (show-no-result-view result)
+        (show-result result))]]
+    (get-footer))
+  )
+
+(defn applicants-page
+  [req]
+  (page (app/getApplications)))
 
 (defn user-details
   [req]
@@ -136,3 +148,11 @@
              {:type "date"}]]
              (form/submit-button {:class "btn"} "Save"))])
              )
+
+(defn current-batch-page
+  [req]
+  (page (app/getCurrent)))
+
+(defn passed-batch-page
+  [req]
+  (page (app/getPassed)))
