@@ -49,23 +49,9 @@ h5 {
   }
 }
 
-button {
-  margin: 30px;
-  padding: 10px;
-  font-weight: 200;
-  font-size: 22px;
-  color: #ffffff;
-  background-color: darkturquoise;
-  border: 0px;
-  text-indent: center;
+.action-button {
+	margin-right: 20px;
 }
-
-/*.action-button {
-	  display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px
-}*/
 
 .display-links {
   float: right;
@@ -119,5 +105,17 @@ button {
 
 .eligible {
   text-align: justify;
+}
+
+.input-inline {
+  margin-right:10px;
+  margin-left:10px; 
+  width: 20%;
+  display: inline-block;
+}
+
+.interview-div {
+  /*display: none;*/
+  border-top:1px solid rgba(160,160,160,0.2) ;
 }
 

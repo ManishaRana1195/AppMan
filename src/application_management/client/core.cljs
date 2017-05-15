@@ -1,14 +1,18 @@
-(ns test-cljs.core
+(ns application-management.client.core
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs-http.client :as http]
             [cljs.core.async :refer [<!]]))
 
 (enable-console-print!)
 
-;; request
-(go (let [response (<! (http/get "/all"))]
-    )) 
+(defn show-form
+	[]
+ (let [view (.getElementById js/document (name "interview-div"))]
+ 	(.setAttribute view "display" "block" )))
 
+(defn show-alert
+	[]
+	())
 
 ;; define your app data so that it doesn't get over-written on reload
 (defonce app-state (atom {:text "Hello world!"}))

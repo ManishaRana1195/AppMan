@@ -1,9 +1,8 @@
 (ns application-management.client.views
   (:require [clojure.string :as str]
-  			[application-management.server.controllers.applications :as app]
+  			    [application-management.server.controllers.applications :as app]
             [hiccup.page :as hic]
-            [compojure.core :refer :all]
-            [hiccup.form :as form]))
+            [hiccup.form :as form]))  
 
 (defn gen-page-head
   [title]
@@ -50,6 +49,17 @@
   (let [link (str/split links #"\s+")]
     (map div-image link)))
 
+
+(defn interview-view
+  []
+    [:div.interview-div
+      [:span.input-inline (form/text-field {:placeholder "Time"} :time)]
+      [:span.input-inline (form/text-field {:placeholder "Date"} :date) ]
+      [:div.chip "or"]
+      [:div.input-inline (form/text-field {:placeholder "Email Id"} :emailId) ]
+      [:button {:class ""} "Ok "]])
+
+
 (defn display-record
 	[details]
     [:div.row.without-margin [:div.col.s12.card.blue-grey.darken-1 
@@ -62,13 +72,16 @@
           ]
             [:p.eligible (get details "eligible")]]
 
-        [:div.col.s3
-              [:div.chips.languages (get-chips (get details "languages"))]]
-
-        [:div.col.s12
+        [:div.col.s3 [:div.chips.languages (get-chips (get details "languages"))]]
+  
+        [:div.col.s4
           [:div.card-action
-          [:a.action-button {:href "#"} "Accept"]
-          [:a.action-button {:href "#"} "Reject"]]]]]
+          [:button.action-button {;;:on-click 
+                                    ;;#(.setAttribute (.getElementById js/document (name "interview-view")) "display" "block")
+                                             } "Accept"]
+          [:button.action-button {:href "/reject"} "Reject"]]]
+        
+        [:div.col.s8  (interview-view)]]]
 )
 
 (defn get-footer
@@ -123,5 +136,3 @@
              {:type "date"}]]
              (form/submit-button {:class "btn"} "Save"))])
              )
-        
-        
